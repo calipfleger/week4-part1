@@ -63,7 +63,7 @@ ggplot( data = compact_suv, aes(x= cty)) +
 ```
 
 ## 3. Quantile-quantile plot (qq plot)
-# - compare my sample to theoretical to see the distribution (?)
+- compare my sample to theoretical to see the distribution (?)
 
 
 ```{r}
@@ -98,6 +98,8 @@ compact_sample <- compact_suv %>%
 suv_sample <- compact_suv %>% 
   filter(class == "suv") %>% 
   pull(cty)
+
+t.test(x= compact_sample, suv_sample)
 ```
 
 
