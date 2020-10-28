@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 
@@ -38,4 +39,83 @@ sierra_bighorns <- c(28, 31, 40, 42,26, 29, 31)
 
 t.test(x= deser_bighorns, y = sierra_bighorns)
 ```
+
+
+## END PART 1
+
+## Part 2: Two-sample t-test 
+
+## 1. Create subset of suv and compact cars
+
+```{r}
+compact_suv <- mpg %>% 
+  filter(class %in% c("compact", "suv"))
+```
+
+## 2. Exploratory data  visualization using ggplot
+
+# -Exploratory histograms:
+
+```{r}
+ggplot( data = compact_suv, aes(x= cty)) +
+  geom_histogram(bins =15) +
+  facet_wrap(~class)
+```
+
+## 3. Quantile-quantile plot (qq plot)
+# - compare my sample to theoretical to see the distribution (?)
+
+
+```{r}
+ggplot(data = compact_suv, aes(sample= cty)) +
+  geom_qq() +
+  facet_wrap(~class)
+```
+
+
+## 4. Descriptive Statistics
+
+
+```{r}
+car_stats <- compact_suv %>% 
+  group_by(class) %>% 
+  summarize(mean_city = mean(cty), 
+            sd_city= sd(cty),
+            n = n()) #calculate # of observations in each group 
+```
+
+## 5. 2-sample t-test
+
+- first create vectors containg observations for each sample (city gas mileage)
+
+- pull will extract a single colun and store it as a vector
+
+```{r}
+compact_sample <- compact_suv %>% 
+  filter(class == "compact") %>% 
+  pull(cty)
+
+suv_sample <- compact_suv %>% 
+  filter(class == "suv") %>% 
+  pull(cty)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
